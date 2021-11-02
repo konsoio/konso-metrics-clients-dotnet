@@ -1,4 +1,5 @@
-
+![Nuget](https://img.shields.io/nuget/v/Konso.Clients.Metrics) 
+![example workflow](https://github.com/konsoio/konso-metrics-clients-dotnet/actions/workflows/dotnet.yml/badge.svg)
 
 # Konso Metrics .Net Client
 
