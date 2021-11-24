@@ -9,10 +9,10 @@ namespace Konso.Clients.Metrics.Middlewares
     public class MetricsMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly IMetricsService _metricsService;
+        private readonly IMetricsServiceClient _metricsService;
 
-        public MetricsMiddleware(RequestDelegate next, 
-            IMetricsService metricsService)
+        public MetricsMiddleware(RequestDelegate next,
+            IMetricsServiceClient metricsService)
         {
             _next = next;
             _metricsService = metricsService;

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Konso.Clients.Metrics.Models
 {
-    public interface IMetricsService
+    public interface IMetricsServiceClient
     {
         Task<bool> CreateAsync(CreateMetricsRequest request);
 

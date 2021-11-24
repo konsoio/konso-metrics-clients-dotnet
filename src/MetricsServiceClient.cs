@@ -12,12 +12,12 @@ using System.Web;
 
 namespace Konso.Clients.Metrics
 {
-    public class MetricsService : IMetricsService
+    public class MetricsServiceClient : IMetricsServiceClient
     {
         private readonly IHttpClientFactory _clientFactory;
         private readonly MetricServiceConfig _metricsConfig;
 
-        public MetricsService(IConfiguration configuration, IHttpClientFactory clientFactory)
+        public MetricsServiceClient(IConfiguration configuration, IHttpClientFactory clientFactory)
         {
             _metricsConfig = new MetricServiceConfig();
             _metricsConfig.Endpoint = configuration.GetValue<string>("Konso:Metrics:Endpoint");
@@ -27,7 +27,7 @@ namespace Konso.Clients.Metrics
             _clientFactory = clientFactory;
         }
 
-        public MetricsService(MetricServiceConfig metricsConfig, IHttpClientFactory clientFactory)
+        public MetricsServiceClient(MetricServiceConfig metricsConfig, IHttpClientFactory clientFactory)
         {
             _metricsConfig = metricsConfig;
             _clientFactory = clientFactory;
@@ -50,7 +50,7 @@ namespace Konso.Clients.Metrics
                 var httpItem = new StringContent(jsonStr, Encoding.UTF8, "application/json");
                 if (!client.DefaultRequestHeaders.TryAddWithoutValidation("x-api-key", _metricsConfig.ApiKey)) throw new Exception("Missing API key");
 
-                var response = await client.PostAsync($"{_metricsConfig.Endpoint}/{_metricsConfig.BucketId}", httpItem);
+                var response = await client.PostAsync($"{_metricsConfig.Endpoint}/v1/metrics/{_metricsConfig.BucketId}", httpItem);
                 response.EnsureSuccessStatusCode();
 
                 return true;
@@ -75,7 +75,7 @@ namespace Konso.Clients.Metrics
                 if (!client.DefaultRequestHeaders.TryAddWithoutValidation("x-api-key", _metricsConfig.ApiKey)) throw new Exception("Missing API key");
 
                 int sortNum = (int)request.Sort;
-                var builder = new UriBuilder($"{_metricsConfig.Endpoint}/{_metricsConfig.BucketId}")
+                var builder = new UriBuilder($"{_metricsConfig.Endpoint}/v1/metrics/{_metricsConfig.BucketId}")
                 {
                     Port = -1
                 };

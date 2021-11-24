@@ -14,7 +14,7 @@ namespace Konso.Clients.Metrics.Extensions
 
         public static void ConfigureKonsoMetricsMiddleware(this IServiceCollection services)
         {
-            services.AddSingleton<IMetricsService, MetricsService>();
+            services.AddSingleton<IMetricsServiceClient, MetricsServiceClient>();
         }
     }
 }

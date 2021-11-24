@@ -13,9 +13,9 @@ namespace Konso.Clients.Metrics.Tests
 {
     public class MetricsTests 
     {
-        private const string apiUrl = "https://devapis.konso.io/v1/metrics";
-        private const string bucketId = "cab6ff8d";
-        private const string apiKey = "IL84eTnxvn5mtlZNH3sSnMqE8V6E5hNm3Synx9E+XeU=";
+        private const string apiUrl = "https://apis.konso.io";
+        private const string bucketId = "<your bucket id>";
+        private const string apiKey = "<your app key>";
         private const string app = "TestApp";
 
 
@@ -23,7 +23,7 @@ namespace Konso.Clients.Metrics.Tests
         public async Task Create_SimpleMetric()
         {
             // arrange
-            var service = new MetricsService(new MetricServiceConfig() {
+            var service = new MetricsServiceClient(new MetricServiceConfig() {
                 ApiKey= apiKey,
                 AppName = app,
                 BucketId= bucketId,
@@ -43,7 +43,7 @@ namespace Konso.Clients.Metrics.Tests
         public async Task CreateAndGet_SimpleMetric()
         {
             // arrange
-            var service = new MetricsService(new MetricServiceConfig()
+            var service = new MetricsServiceClient(new MetricServiceConfig()
             {
                 ApiKey = apiKey,
                 AppName = app,
@@ -59,14 +59,14 @@ namespace Konso.Clients.Metrics.Tests
 
             // assert
             pagedList.Should().NotBeNull();
-            pagedList.Total.Should().BeGreaterThan(10);
+            pagedList.Total.Should().BeGreaterThan(0);
 
         }
 
         [Fact]
         public async Task Create_SimpleWithTag()
         {
-            var service = new MetricsService(new MetricServiceConfig()
+            var service = new MetricsServiceClient(new MetricServiceConfig()
             {
                 ApiKey = apiKey,
                 AppName = app,
@@ -88,7 +88,7 @@ namespace Konso.Clients.Metrics.Tests
         public async Task CreateAndGet_SimpleWithTag()
         {
             // arrange
-            var service = new MetricsService(new MetricServiceConfig()
+            var service = new MetricsServiceClient(new MetricServiceConfig()
             {
                 ApiKey = apiKey,
                 AppName = app,
