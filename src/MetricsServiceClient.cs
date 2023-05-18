@@ -2,7 +2,7 @@
 using Konso.Clients.Metrics.Models;
 using Konso.Clients.Metrics.Models.Dtos;
 using Konso.Clients.Metrics.Models.Requests;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Net.Http;
 using System.Text;
@@ -17,21 +17,12 @@ namespace Konso.Clients.Metrics
         private readonly IHttpClientFactory _clientFactory;
         private readonly MetricServiceConfig _metricsConfig;
 
-        public MetricsServiceClient(IConfiguration configuration, IHttpClientFactory clientFactory)
+        public MetricsServiceClient(IOptions<MetricServiceConfig> config, IHttpClientFactory clientFactory)
         {
-            _metricsConfig = new MetricServiceConfig();
-            _metricsConfig.Endpoint = configuration.GetValue<string>("Konso:Metrics:Endpoint");
-            _metricsConfig.BucketId = configuration.GetValue<string>("Konso:Metrics:BucketId");
-            _metricsConfig.AppName = configuration.GetValue<string>("Konso:Metrics:AppName");
-            _metricsConfig.ApiKey = configuration.GetValue<string>("Konso:Metrics:ApiKey");
+            _metricsConfig = config.Value;
             _clientFactory = clientFactory;
         }
 
-        public MetricsServiceClient(MetricServiceConfig metricsConfig, IHttpClientFactory clientFactory)
-        {
-            _metricsConfig = metricsConfig;
-            _clientFactory = clientFactory;
-        }
         public async Task<bool> CreateAsync(CreateMetricsRequest request)
         {
             try

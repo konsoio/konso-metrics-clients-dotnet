@@ -4,6 +4,7 @@ using Konso.Clients.Metrics.Models;
 using Konso.Clients.Metrics.Models.Requests;
 using Konso.Clients.Metrics.Models.Requests.Enums;
 using Konso.Metrics.Client.Tests;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -23,12 +24,12 @@ namespace Konso.Clients.Metrics.Tests
         public async Task Create_SimpleMetric()
         {
             // arrange
-            var service = new MetricsServiceClient(new MetricServiceConfig() {
+            var service = new MetricsServiceClient(Options.Create(new MetricServiceConfig() {
                 ApiKey= apiKey,
                 AppName = app,
                 BucketId= bucketId,
                 Endpoint= apiUrl
-            }, new DefaultHttpClientFactory());
+            }), new DefaultHttpClientFactory());
 
             // act
             var o = new CreateMetricsRequest() { AppName = "test", Duration = 15, Name = "GET v1/test", TimeStamp = DateTime.UtcNow.ToEpoch(), ResponseCode = 200 };
@@ -43,13 +44,13 @@ namespace Konso.Clients.Metrics.Tests
         public async Task CreateAndGet_SimpleMetric()
         {
             // arrange
-            var service = new MetricsServiceClient(new MetricServiceConfig()
+            var service = new MetricsServiceClient(Options.Create(new MetricServiceConfig()
             {
                 ApiKey = apiKey,
                 AppName = app,
                 BucketId = bucketId,
                 Endpoint = apiUrl
-            }, new DefaultHttpClientFactory());
+            }), new DefaultHttpClientFactory());
 
             var o = new CreateMetricsRequest() { AppName = "test", Duration = 15, Name = "GET v1/test", TimeStamp = DateTime.UtcNow.ToEpoch(), ResponseCode = 200 };
             var res = await service.CreateAsync(o);
@@ -66,13 +67,13 @@ namespace Konso.Clients.Metrics.Tests
         [Fact]
         public async Task Create_SimpleWithTag()
         {
-            var service = new MetricsServiceClient(new MetricServiceConfig()
+            var service = new MetricsServiceClient(Options.Create(new MetricServiceConfig()
             {
                 ApiKey = apiKey,
                 AppName = app,
                 BucketId = bucketId,
                 Endpoint = apiUrl
-            }, new DefaultHttpClientFactory());
+            }), new DefaultHttpClientFactory());
 
 
             var o = new CreateMetricsRequest() { AppName = "test", Duration = 15, Name = "GET v1/test", TimeStamp = DateTime.UtcNow.ToEpoch(), ResponseCode = 200, Tags = new List<string>() { "test" } };
@@ -88,13 +89,13 @@ namespace Konso.Clients.Metrics.Tests
         public async Task CreateAndGet_SimpleWithTag()
         {
             // arrange
-            var service = new MetricsServiceClient(new MetricServiceConfig()
+            var service = new MetricsServiceClient(Options.Create(new MetricServiceConfig()
             {
                 ApiKey = apiKey,
                 AppName = app,
                 BucketId = bucketId,
                 Endpoint = apiUrl
-            }, new DefaultHttpClientFactory());
+            }), new DefaultHttpClientFactory());
 
             var o = new CreateMetricsRequest() { AppName = "test", Duration = 15, Name = "GET v1/tagtest", TimeStamp = DateTime.UtcNow.ToEpoch(), ResponseCode = 200, Tags = new List<string>() { "test" } };
 
