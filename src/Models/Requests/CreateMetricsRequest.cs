@@ -27,7 +27,16 @@ namespace Konso.Clients.Metrics.Models.Requests
 
         public string AppName { get; set; }
 
+        public string? AppVersion { get; set; }
         public string CorrelationId { get; set; }
+
+        public string? UserAgent { get; set; }
+
+        public string? IP { get; set; }
+
+        public byte? Runtime { get; set; }
+
+        public string? RuntimeVersion { get; set; }
 
     }
 }

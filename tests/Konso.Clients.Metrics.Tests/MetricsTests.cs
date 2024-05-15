@@ -102,7 +102,7 @@ namespace Konso.Clients.Metrics.Tests
             var response = await service.CreateAsync(o);
 
             // act
-            var res = await service.GetByAsync(new MetricsGetRequest { Tags = new List<string>() { "test" }, From = 0, To = 10, Sort = SortingTypes.TimeStampDesc });
+            var res = await service.GetByAsync(new MetricsGetRequest { BucketId=bucketId, Tags = new List<string>() { "test" }, From = 0, To = 10, Sort = SortingTypes.TimeStampDesc });
 
 
             // assert

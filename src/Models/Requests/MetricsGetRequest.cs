@@ -9,9 +9,9 @@ namespace Konso.Clients.Metrics.Models.Requests
 {
     public class MetricsGetRequest
     {
-        public string BucketId { get; set; }
-        public string AppName { get; set; }
-        public string Name { get; set; }
+        public required string BucketId { get; set; }
+        public string? AppName { get; set; }
+        public string? Name { get; set; }
         public int? ResponseCode { get; set; }
         public long? DateFrom { get; set; }
         public long? DateTo { get; set; }
@@ -20,6 +20,6 @@ namespace Konso.Clients.Metrics.Models.Requests
         public List<string> Tags { get; set; }
         public SortingTypes Sort { get; set; } = SortingTypes.TimeStampDesc;
 
-        public string CorrelationId { get; set; }
+        public string? CorrelationId { get; set; }
     }
 }

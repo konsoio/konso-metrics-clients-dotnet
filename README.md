@@ -47,7 +47,7 @@ in `startup.cs`:
 
 ```csharp
 
-builder.Logging.ConfigureKonsoMetrics(options =>
+builder.Services.ConfigureKonsoMetrics(options =>
 {
     options.Endpoint = builder.Configuration["Konso:Metrics:Endpoint"];
     options.BucketId = builder.Configuration["Konso:Metrics:BucketId"];
