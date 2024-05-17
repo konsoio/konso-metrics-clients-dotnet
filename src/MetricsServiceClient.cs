@@ -4,9 +4,11 @@ using Konso.Clients.Metrics.Models.Dtos;
 using Konso.Clients.Metrics.Models.Requests;
 using Microsoft.Extensions.Options;
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -31,6 +33,17 @@ namespace Konso.Clients.Metrics
                 if (string.IsNullOrEmpty(_metricsConfig.Endpoint)) throw new Exception("Endpoint is not defined");
                 if (string.IsNullOrEmpty(_metricsConfig.BucketId)) throw new Exception("Bucket is not defined");
                 if (string.IsNullOrEmpty(_metricsConfig.ApiKey)) throw new Exception("API key is not defined");
+
+
+                if (_metricsConfig.IgnorePath != null)
+                {
+                    foreach (var ignoredPath in _metricsConfig.IgnorePath)
+                    {
+                        // ignore path 
+                        if(CultureInfo.InvariantCulture.CompareInfo.IndexOf(request.Name, ignoredPath, CompareOptions.IgnoreCase) >= 0)
+                            return true;
+                    }
+                }
 
                 request.AppName = _metricsConfig.AppName;
                 
