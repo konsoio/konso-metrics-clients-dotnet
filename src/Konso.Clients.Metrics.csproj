@@ -11,14 +11,8 @@
     <PackageTags>Konso, Metrics</PackageTags>
     <RepositoryUrl>https://github.com/konsoio/konso-metrics-clients-dotnet</RepositoryUrl> 
     <RepositoryType>git</RepositoryType>
-	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="docs\**" />
-    <EmbeddedResource Remove="docs\**" />
-    <None Remove="docs\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
