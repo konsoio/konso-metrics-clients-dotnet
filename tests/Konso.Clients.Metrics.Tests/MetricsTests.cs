@@ -7,6 +7,7 @@ using Konso.Metrics.Client.Tests;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -110,6 +111,24 @@ namespace Konso.Clients.Metrics.Tests
             {
                 item.Tags.Should().Contain("test");
             }
+        }
+
+        [Theory]
+        [InlineData("GET /healthz", new[] { "healthz" }, true)]
+        [InlineData("GET /image/about-company-picture.png", new[] { ".png" }, true)]
+        [InlineData("GET /image/about-company-picture.js", new[] { ".js" }, true)]
+        public void CheckIgnoredMessages(string str, string[] toIgnore, bool expected)
+        {
+            var service = new MetricsServiceClient(Options.Create(new MetricServiceConfig()
+            {
+                ApiKey = apiKey,
+                AppName = app,
+                BucketId = bucketId,
+                Endpoint = apiUrl
+            }), new DefaultHttpClientFactory());
+
+            var result = service.HasStringToIgnore(str, toIgnore.ToList());
+            result.Should().Be(expected);
         }
     }
 }

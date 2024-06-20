@@ -4,6 +4,7 @@ using Konso.Clients.Metrics.Models.Dtos;
 using Konso.Clients.Metrics.Models.Requests;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Net.Http;
 using System.Text;
@@ -37,11 +38,9 @@ namespace Konso.Clients.Metrics
 
                 if (_metricsConfig.IgnorePath != null)
                 {
-                    foreach (var ignoredPath in _metricsConfig.IgnorePath)
+                    if (HasStringToIgnore(request.Name, _metricsConfig.IgnorePath))
                     {
-                        // ignore path 
-                        if(CultureInfo.InvariantCulture.CompareInfo.IndexOf(request.Name, ignoredPath, CompareOptions.IgnoreCase) >= 0)
-                            return true;
+                        return true;
                     }
                 }
 
@@ -61,7 +60,7 @@ namespace Konso.Clients.Metrics
                 var httpItem = new StringContent(jsonStr, Encoding.UTF8, "application/json");
                 if (!client.DefaultRequestHeaders.TryAddWithoutValidation("x-api-key", _metricsConfig.ApiKey)) throw new Exception("Missing API key");
 
-                var response = await client.PostAsync($"{_metricsConfig.Endpoint}/v1/metrics/{_metricsConfig.BucketId}", httpItem);
+                var response = await client.PostAsync($"{_metricsConfig.Endpoint}/metrics/{_metricsConfig.BucketId}", httpItem);
                 response.EnsureSuccessStatusCode();
 
                 return true;
@@ -73,6 +72,21 @@ namespace Konso.Clients.Metrics
            
         }
 
+        public bool HasStringToIgnore(string input, List<string> toIgnore)
+        {
+            var result = false;
+            foreach (var ignoredPath in toIgnore)
+            {
+                // ignore path 
+                if (CultureInfo.InvariantCulture.CompareInfo.IndexOf(input, ignoredPath, CompareOptions.IgnoreCase) >= 0)
+                {
+                    result = true;
+                    break;
+                }
+            }
+
+            return result;
+        }
 
         public async Task<PagedResponse<MetricsDto>> GetByAsync(MetricsGetRequest request)
         {
@@ -86,7 +100,7 @@ namespace Konso.Clients.Metrics
                 if (!client.DefaultRequestHeaders.TryAddWithoutValidation("x-api-key", _metricsConfig.ApiKey)) throw new Exception("Missing API key");
 
                 int sortNum = (int)request.Sort;
-                var builder = new UriBuilder($"{_metricsConfig.Endpoint}/v1/metrics/{_metricsConfig.BucketId}")
+                var builder = new UriBuilder($"{_metricsConfig.Endpoint}/metrics/{_metricsConfig.BucketId}")
                 {
                     Port = -1
                 };
