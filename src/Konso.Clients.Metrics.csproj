@@ -13,7 +13,9 @@
     <RepositoryType>git</RepositoryType>
 	<PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
-
+    <ItemGroup>
+	    <None Include="Readme.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
