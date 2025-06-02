@@ -9,7 +9,6 @@ using System.Globalization;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -47,11 +46,8 @@ namespace Konso.Clients.Metrics
                 request.AppName = _metricsConfig.AppName;
                 
                 request.TimeStamp = DateTime.UtcNow.ToEpoch();
-
-                System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-                System.Diagnostics.FileVersionInfo fvi = System.Diagnostics.FileVersionInfo.GetVersionInfo(assembly.Location);
                 
-                request.AppVersion = !string.IsNullOrEmpty(fvi.FileVersion) ? fvi.FileVersion : "0.0.0";
+                request.AppVersion = VersionInfoHelper.AppVersion(); ;
                 request.Runtime = 1; // dotnet
                 request.RuntimeVersion = Environment.Version.ToString();
                 // serialize request as json

@@ -5,6 +5,18 @@
 
 The Konso Metrics .NET client library is a powerful tool designed to capture web application metrics. It provides a simple and efficient way to monitor and analyze various aspects of your web application's performance, allowing you to gain valuable insights and make data-driven decisions.
 
+
+## Table of Contents
+
+- [Konso Metrics .Net Client](#konso-metrics-net-client)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Install the library via NuGet or by manually referencing the assembly in your project](#install-the-library-via-nuget-or-by-manually-referencing-the-assembly-in-your-project)
+    - [Initialize the library with your API credentials and configuration settings](#initialize-the-library-with-your-api-credentials-and-configuration-settings)
+    - [Use to register a middleware](#use-to-register-a-middleware)
+  - [Requirements](#requirements)
+  - [Support and Feedback](#support-and-feedback)
+
 ## Features
 
 **Metric Collection**: Konso Metrics enables you to capture a wide range of metrics related to your web application, including request/response times, error rates, throughput, latency, and many others. It offers a comprehensive set of predefined metrics as well as the flexibility to define custom metrics tailored to your specific needs.
@@ -38,7 +50,8 @@ Add config to `appsettings.json`:
     "Metrics": {
         "Endpoint": "https://apis.konso.io",
         "BucketId": "<your bucket id>",
-        "ApiKey": "<bucket's access key>"
+        "ApiKey": "<bucket's access key>",
+        "App": "<your app name>"
     }
 }
 ```
@@ -75,4 +88,4 @@ Metrics will be captured every time there is request to the application
 
 If you encounter any issues or have any questions or feedback, please reach out to our support team at <support at konso.io>. We are here to assist you and continually improve the Konso Value Tracking .NET Client Library to meet your business needs.
 
-✅ Developed / Developing by [InDevLabs](https://indevlabs.de)
+✅ Developed / Developing by [Konso](https://konso.io)
